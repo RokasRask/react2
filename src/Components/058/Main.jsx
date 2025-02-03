@@ -5,21 +5,33 @@ import Home from './Home';
 import { useContext } from 'react';
 import RouterContext from './Router';
 import Page404 from './Page404';
+import Product from './Product';
 
 export default function Main() {
 
-    const { page } = useContext(RouterContext);
+    const { page, parameters } = useContext(RouterContext);
 
     const routes = {
-        shop: <Shop />,
-        contacts: <Contacts />,
-        about: <About />,
-        '': <Home />
+        shop: {c: <Shop />, title: 'Shop', params: 0},
+        contacts: {c: <Contacts />, title: 'Contacts', params: 0},
+        about: {c: <About />, title: 'About', params: 0},
+        product: {c: <Product />, title: 'Product', params: 2},
+        '': {c: <Home />, title: 'Home', params: 0},
+    };
+
+    const route = _ => {
+        if (routes[page] === undefined) {
+            return <Page404 />;
+        }
+        if (parameters.length !== routes[page].params) {
+            return <Page404 />;
+        }
+        return routes[page].c;
     };
 
     return (
         <main>
-            {routes[hash] ?? <Page404 />}
+            {route()}
         </main>
     )
 }

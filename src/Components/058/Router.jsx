@@ -6,10 +6,15 @@ const RouterContext = createContext();
 
 export const Router = ({ children }) => {
 
-    const [page, setPage] = useState(window.location.hash.replace('#', ''));
-    const [parameters, setParameters] = useState(_ => {
+    const [page, setPage] = useState(_ => {
         let hash = window.location.hash.replace('#', '');
         hash = hash.split('/').shift();
+        return hash;
+    })
+    const [parameters, setParameters] = useState(_ => {
+        let hash = window.location.hash.replace('#', '');
+        hash = hash.split('/');
+        hash.shift();
         return hash;
     })
 
@@ -27,12 +32,21 @@ export const Router = ({ children }) => {
 
     useEffect(_ => {
 
-        console.log('hash', page);
+        console.log('page', page);
 
-    }, [hash])
+    }, [page])
+
+    useEffect(_ => {
+
+        console.log('parameters', parameters);
+
+    }, [parameters])
 
     return (
-        <RouterContext.Provider value={{page}}>
+        <RouterContext.Provider value={{
+            page,
+            parameters
+            }}>
             {children}
         </RouterContext.Provider>
     );
