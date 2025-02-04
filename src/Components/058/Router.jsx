@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import Wrapper from './Wrapper';
 
 const RouterContext = createContext();
 
@@ -17,6 +18,8 @@ export const Router = ({ children }) => {
         hash.shift();
         return hash;
     })
+
+    const [showComponent, setShowComponent] = useState(null);
 
     useEffect(_ => {
 
@@ -48,6 +51,7 @@ export const Router = ({ children }) => {
             parameters
             }}>
             {children}
+            {showComponent === null ? children : <Wrapper><h1>Kažkas ne taip</h1></Wrapper>}
         </RouterContext.Provider>
     );
 }
