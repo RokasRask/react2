@@ -2,9 +2,10 @@ import Shop from './Shop';
 import Contacts from './Contacts';
 import About from './About';
 import Home from './Home';
+import Product from './Product';
 import { useContext } from 'react';
 import RouterContext from './Router';
-import Product from './Product';
+
 
 export default function Main() {
 
@@ -12,10 +13,9 @@ export default function Main() {
 
     const routes = {
         shop: {c: <Shop />, title: 'Shop', params: 0},
-        contacts: {c: <Contacts />, title: 'Contacts', params: 1, validParams: 
-            [
-                'kaunas', 'vilnius'
-            ]},
+        contacts: {c: <Contacts />, title: 'Contacts', params: 1, validParams: [
+            ['kaunas', 'vilnius']
+        ]},
         about: {c: <About />, title: 'About', params: 0},
         product: {c: <Product />, title: 'Product', params: 2},
         '': {c: <Home />, title: 'Home', params: 0},
@@ -45,5 +45,5 @@ export default function Main() {
         <main>
             {route()}
         </main>
-    )
+    );
 }
