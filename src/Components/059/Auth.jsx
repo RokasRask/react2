@@ -4,8 +4,9 @@ import axios from 'axios';
 const AuthContext = createContext();
 const URL = 'http://localhost:3333';
 
+const redirectAfterLogin = 'http://localhost:3000';
 
-export const Auth = ({children}) => {
+export const Auth = ({ children }) => {
 
     const [loginData, setLoginData] = useState(null);
     const [authMessage, setAuthMessage] = useState(null);
@@ -16,26 +17,33 @@ export const Auth = ({children}) => {
         }
         console.log(loginData);
 
-        axios.post(`${URL}/login`, loginData)
-        .then(res => {
-            console.log(res.data);
-            if (!res.data.success) {
-                setAuthMessage({
-                    text: res.data.message.text,
-                    color: res.data.message.color
-                });
-            } else {
-                setAuthMessage(null);
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        axios.post(`${URL}/login`, loginData, { withCredentials: true }) // , { withCredentials: true } dėl cookie
+            .then(res => {
+                console.log(res.data);
+                if (!res.data.success) {
+                    setAuthMessage({
+                        text: res.data.message.text,
+                        color: res.data.message.color
+                    });
+                } else {
+                    setAuthMessage({
+                        text: res.data.message.text,
+                        color: res.data.message.color
+                    });
+                    window.location.href = redirectAfterLogin;
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
     }, [loginData]);
 
     return (
-        <AuthContext.Provider value={{setLoginData, authMessage}}>
+        <AuthContext.Provider value={{
+            setLoginData,
+            authMessage
+        }}>
             {children}
         </AuthContext.Provider>
     );
