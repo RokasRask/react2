@@ -1,29 +1,22 @@
-
-import './app.css';
+import './image-crud.scss';
 import './buttons.scss';
-
-
-import { Router } from './Components/059/Router';
-import Main from './Components/059/Main';
-import Nav from './Components/059/Nav';
-import Wrapper from './Components/059/Wrapper';
-import {Auth} from './Components/059/Auth';
-
+import Create from './Components/crud/Create';
 
 
 function App() {
 
+
     return (
-        <Router>
-            <Auth>
-                <Wrapper>
-
-                    <Nav />
-                    <Main />
-
-                </Wrapper>
-            </Auth>
-        </Router>
+        <div className="container text-center">
+            <div className="row">
+                <div className="col-4">
+                    <Create />
+                </div>
+                <div className="col-8">
+                    listas
+                </div>
+            </div>
+        </div>
     );
 }
 
